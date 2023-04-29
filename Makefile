@@ -1,7 +1,7 @@
 CC=gcc
 COPTS=-Wall -lm
 
-all:
+build:
 	${CC} ${COPTS} -o main main.c tree.c
 
 run: all
