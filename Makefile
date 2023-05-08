@@ -4,5 +4,5 @@ COPTS=-Wall -lm
 build:
 	${CC} ${COPTS} -o main main.c tree.c
 
-run: all
+run: build
 	@./main
