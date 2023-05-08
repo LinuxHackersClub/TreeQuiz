@@ -4,6 +4,8 @@
 #include <ctype.h>
 #include "tree.h"
 
+// Maximum length of any answer
+// Needed for malloc
 #define ANSWER_MAX 1024
 
 
