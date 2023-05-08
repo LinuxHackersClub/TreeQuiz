@@ -1,4 +1,3 @@
-#include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,19 +9,30 @@
 
 // Split string 'text' using delimiter 'sep', storing number into 'count'
 char **split(char *text, const char *sep, unsigned int *count) {
+    // Resulting array will be allocated lat
     char **res = NULL;
-    char *p = strtok(text, sep);
+
+    // Set counter to zero
     *count = 0;
 
-    while (p) {
-        if ((res = realloc(res, sizeof(char*) * (++*count))) == NULL)
-          return NULL;
+    // Start separating string
+    char *p = strtok(text, sep);
 
+    // While there is a token
+    while (p) {
+        // Try to reallocate space for the array
+        if ((res = realloc(res, sizeof(char*) * (++*count))) == NULL)
+            // Return NULL if failed
+            return NULL;
+
+        // Store the address of this token
         res[*count - 1] = p;
 
-        p = strtok(NULL, "\n");
+        // Try to get next token
+        p = strtok(NULL, sep);
     }
 
+    // Return the final array
     return res;
 }
 
@@ -30,23 +40,39 @@ char **split(char *text, const char *sep, unsigned int *count) {
 // Calculate and return size of file
 // using fseek() functions
 int getfsize(FILE *fp) {
-    fseek(fp, 0, SEEK_END); 
+    // Seek to the end of the file
+    fseek(fp, 0, SEEK_END);
+
+    // Get current (aka ending) position
     int size = ftell(fp);
+
+    // Return to the beginning of the file
     fseek(fp, 0, SEEK_SET); 
 
+    // Return the size of file
     return size;
 }
 
+
+// Read whole file
 char *readall(char *filename) {
+    // Create file pointer
     FILE *fp;
+    
+    // Open the file for reading
     if ((fp = fopen(filename, "r")) == NULL)
         return NULL;
 
-
+    // Calculate size of the file
     int size = getfsize(fp);
+
+    // Allocate enough space
     char *content = malloc(size);
+
+    // Read whole file
     fread(content, sizeof(content), size, fp);
 
+    // Return the content
     return content;
 }
 
