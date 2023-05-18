@@ -109,6 +109,9 @@ int main(int argc, char **argv) {
     // Final score
     int score = 0;
 
+    // Allocate space for answer
+    char *answer = calloc(ANSWER_MAX, sizeof(int));
+
 
     // Start main loop
     do {
@@ -135,9 +138,6 @@ int main(int argc, char **argv) {
         // Ask user the question and prompt for answer
         printf("%s\n> ", question);
 
-        // Allocate space for answer
-        char *answer = calloc(ANSWER_MAX, sizeof(int));
-
         // Read user input
         if (fgets(answer, ANSWER_MAX, stdin) == NULL) {
             // The fgets() function returns NULL if error/EOF occurred
@@ -154,7 +154,6 @@ int main(int argc, char **argv) {
 
         // Compare user answer and the correct one
         if (strcmp(answer, correct) == 0) {
-
             // Go to the right node
             printf("Correct!\n");
             t = t->right;
@@ -162,7 +161,6 @@ int main(int argc, char **argv) {
             // Black magic to calculate score, part 2
             score |= 1;
         } else {
-
             // Show correct answer and go to the left node
             printf("Incorrect, the right answer was: %s\n", correct);
             t = t->left;
@@ -170,7 +168,6 @@ int main(int argc, char **argv) {
 
         // Free allocated space
         free(qa);
-        free(answer);
     } while (t != NULL);
 
     printf("Your final score is %u\n", score);
